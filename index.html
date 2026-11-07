@@ -34,7 +34,24 @@ function lesson(i){const s=lessons[i];document.querySelectorAll('[data-lesson]')
 document.querySelectorAll('[data-lesson]').forEach(b=>b.addEventListener('click',()=>lesson(Number(b.dataset.lesson))));lesson(0);
 document.querySelectorAll('[role=tablist]').forEach(list=>list.addEventListener('keydown',e=>{if(!['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','Home','End'].includes(e.key))return;e.preventDefault();const tabs=[...list.querySelectorAll('[role=tab]')];let i=tabs.indexOf(document.activeElement);i=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(['ArrowRight','ArrowDown'].includes(e.key)?1:-1)+tabs.length)%tabs.length;tabs[i].click();tabs[i].focus();}));
 function route(){let id=location.hash.slice(1)||'home';if(id==='prep'){location.replace('prep.html#prep');return;}if(id==='assessment'){location.replace('assessment.html');return;}if(!document.getElementById(id)?.classList.contains('page'))id='home';document.querySelectorAll('.page').forEach(p=>p.hidden=p.id!==id);document.querySelectorAll('nav a').forEach(a=>{const active=a.hash==='#'+id;a.classList.toggle('active',active);if(active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});document.querySelectorAll('#'+id+' iframe[data-src]').forEach(f=>{f.src=f.dataset.src;delete f.dataset.src;});document.title=({'home':'教學升級指南','prep':'課前備課','classroom':'課中教學・我的籃球夢','assessment':'課後評量','cases':'更多例子'}[id])+'｜佳釧老師';}
-addEventListener('hashchange',()=>{route();scrollTo(0,0);});route();</script><script>(()=>{'use strict';
+function showRoute() {
+  route();
+  window.scrollTo({top: 0, left: 0, behavior: 'instant'});
+}
+
+document.addEventListener('click', event => {
+  if (event.defaultPrevented || event.button !== 0 || event.ctrlKey ||
+      event.metaKey || event.shiftKey || event.altKey) return;
+  const link = event.target.closest('a[href="#classroom"]');
+  if (!link || link.target || link.hasAttribute('download')) return;
+
+  event.preventDefault();
+  const oldURL = location.href;
+  if (location.hash !== '#classroom') history.pushState(null, '', '#classroom');
+  window.dispatchEvent(new HashChangeEvent('hashchange', {oldURL, newURL: location.href}));
+});
+addEventListener('hashchange', showRoute);
+route();</script><script>(()=>{'use strict';
 const sheet='1gxZzbuw4Ctzobk6ZFmN4aupsrUpq94PZmuf4dxBdu2M',page=document.getElementById('cases'),grid=document.getElementById('case-grid'),status=document.getElementById('case-status'),search=document.getElementById('case-search'),refresh=document.getElementById('case-refresh');let records=[],pending=false,lastSuccess=0,loaded=false;
 function safeURL(value){try{const u=new URL(value);return ['https:','http:'].includes(u.protocol)?u.href:null;}catch{return null;}}
 function render(){const term=search.value.trim().toLocaleLowerCase();const items=records.filter(r=>(r.title+' '+r.description).toLocaleLowerCase().includes(term));grid.replaceChildren();if(!items.length){const box=document.createElement('div');box.className='case-empty';box.textContent=records.length?'找不到符合的工具，請換個關鍵字試試。':'資料表目前沒有可顯示的工具。請在 A、B、C 欄填入名稱、說明與完整網址。';grid.append(box);return;}items.forEach((r,i)=>{const card=document.createElement('article');card.className='case-card';const icon=document.createElement('span');icon.className='case-sticker';icon.setAttribute('aria-hidden','true');icon.textContent=['✎','✧','▤','◎'][i%4];const title=document.createElement('h2');title.textContent=r.title;const text=document.createElement('p');text.textContent=r.description;const link=document.createElement('a');link.className='button';link.href=r.url;link.target='_blank';link.rel='noopener noreferrer';link.textContent='開啟工具 ↗';link.setAttribute('aria-label','開啟'+r.title+'，另開分頁');card.append(icon,title,text,link);grid.append(card);});}
