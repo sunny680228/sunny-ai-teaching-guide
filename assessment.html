@@ -249,9 +249,9 @@ panel.innerHTML=`<section class="form-section"><div class="step-heading"><b>1</b
 <div class="paper-major">${checks([['pUseChoice','語文選擇題']])}<div class="field-grid">${num('pChoiceCount','總題數',20,1,40)}${num('pChoiceScore','本大題總分',40,1,100)}${num('pShape','字形題數',4,0,40)}${num('pSound','字音題數',4,0,40)}${num('pMeaning','文意題數',8,0,40)}${num('pRhetoric','修辭題數',4,0,40)}</div><label>文意題重點<select id="pMeaningRule"><option>理解與推論為主，避免課文細節記憶</option><option>理解、推論與跨句整合</option></select></label><label>選項編號<select id="pOptionStyle"><option>1. 2. 3. 4.</option><option>① ② ③ ④</option><option>（1）（2）（3）（4）</option></select></label></div>
 <div class="paper-major">${checks([['pUseSentence','造句與照樣造句']])}<div class="field-grid">${num('pSentence','造句題數',3,0,10)}${num('pImitate','照樣造句題數',2,0,10)}${num('pSentenceEach','每題分數',4,1,20)}</div><label>句型或詞語考點<textarea id="pSentenceFocus" rows="2" placeholder="依考試重點附件指定；可在這裡補充句型。"></textarea></label></div>
 <div class="paper-major">${checks([['pUsePunctuation','標點符號']])}<div class="field-grid">${num('pPunctuationCount','作答格數',5,1,20)}${num('pPunctuationScore','本大題總分',5,1,30)}</div><label>已教標點<input id="pPunctuationFocus" placeholder="依已教內容；例如逗號、句號、冒號、引號"></label></div>
-<div class="paper-major">${checks([['pUseReading','說明文閱讀與寫作任務']])}<div class="field-grid"><label>文章主題<input id="pTopic" value="臺灣黑熊"></label>${num('pWords','文章字數（約）',500,150,1200)}${num('pReadingCount','閱讀理解題數',5,1,10)}${num('pReadingEach','每題分數',2,1,10)}${num('pWritingCount','寫作任務題數',1,0,3)}${num('pWritingEach','每題分數',5,1,20)}</div><label>仿照課名／參考文本<input id="pReference" value="臺灣的山椒魚"></label><label>寫作任務形式<select id="pWritingType"><option>依本文訊息撰寫保育宣導短文</option><option>依本文訊息寫一則說明卡</option><option>依本文訊息提出建議並說明理由</option></select></label>${checks([['pReadTitle','包含選出適切標題'],['pReadFeatures','包含說明文特點／說明方法'],['pReadEvidence','其餘題目重視理解、推論與整合'],['pReadOriginal','自編完整文章，事實須查核']])}</div>
+<div class="paper-major">${checks([['pUseReading','閱讀與寫作任務']])}<div class="field-grid"><label>文體<select id="pGenre"><option>說明文</option><option>記敘文</option><option>議論文</option><option>抒情文</option><option>應用文</option></select></label><label>文章主題<input id="pTopic" value="臺灣黑熊"></label>${num('pWords','文章字數（約）',500,150,1200)}${num('pReadingCount','閱讀理解題數',5,1,10)}${num('pReadingEach','每題分數',2,1,10)}${num('pWritingCount','寫作任務題數',1,0,3)}${num('pWritingEach','每題分數',5,1,20)}</div><label>仿照課名／參考文本<input id="pReference" value="臺灣的山椒魚"></label><label>寫作任務形式<select id="pWritingType"><option>依本文訊息撰寫保育宣導短文</option><option>依本文訊息寫一則說明卡</option><option>依本文訊息提出建議並說明理由</option><option>寫一封信給文中某個角色</option><option>針對文章某個觀點提出贊成或反對的想法</option><option>延伸寫作：與主題相關的自身經驗</option><option>其他（由 AI 依文體與主題補充）</option></select></label></div>
 <div id="paperScore" class="paper-score" role="status"></div><p id="paperError" role="alert"></p></section>
-<section class="form-section"><div class="step-heading"><b>3</b><h2>命題與審題原則</h2></div><p class="form-help">以下依您提供的 Gem 指南整理。各大題配分以本次設定優先，不將參考比例套成固定規定。</p>${checks([['pContext','生活情境與適齡語料'],['pConfusion','誘答對應常見迷思與誤讀'],['pLogic','詞彙、句型與邏輯依已教範圍'],['pLevels','閱讀歷程：提取、推論、統整、比較評估'],['pParaphrase','理解題正答換句話說，避免照抄送分'],['pFair','題目獨立、公平，避免前後題互相洩漏答案'],['pRubric','非選題附評分規準、部分給分及可接受答案'],['pLength','控制題幹與選項長度，四個選項盡量相近']])}<label>其他評量面向（選填）<select id="pAdditional"><option>不增加，依上方藍圖命題</option><option>另列聆聽／口語評量建議，不計入本卷</option><option>另列創意思考延伸任務，不計入本卷</option></select></label><label>機器人內資料／額外命題規範<textarea id="pRobot" rows="3" placeholder="若有題幹或選項的具體字數限制，請貼在這裡，或於 AI 對話一併提供；不可假設 AI 已讀取另一個機器人的資料。"></textarea></label><label>教師補充要求<textarea id="pExtra" rows="3" placeholder="例如施測時間、各課權重、特定句型、需要注音的字。"></textarea></label><button type="button" class="button primary full" id="paperGenerate">產生整張考卷提示詞 →</button><button type="button" class="text-link" id="paperReset">恢復三年級範例設定</button><p class="micro">選項變更後會更新右側提示詞。直接編輯過提示詞時，請先複製保留，再調整設定。</p></section>`;
+<section class="form-section"><div class="step-heading"><b>3</b><h2>命題與審題原則</h2></div><p class="form-help">以下依您提供的 Gem 指南整理。各大題配分以本次設定優先，不將參考比例套成固定規定。</p>${checks([['pConfusion','誘答對應常見迷思與誤讀'],['pLogic','詞彙、句型與邏輯依已教範圍'],['pLevels','閱讀歷程：提取、推論、統整、比較評估'],['pParaphrase','理解題正答換句話說，避免照抄送分'],['pFair','題目獨立、公平，避免前後題互相洩漏答案'],['pRubric','非選題附評分規準、部分給分及可接受答案'],['pLength','控制題幹與選項長度，四個選項盡量相近']])}<label>其他評量面向（選填）<select id="pAdditional"><option>不增加，依上方藍圖命題</option><option>另列聆聽／口語評量建議，不計入本卷</option><option>另列創意思考延伸任務，不計入本卷</option></select></label><label>機器人內資料／額外命題規範<textarea id="pRobot" rows="3" placeholder="若有題幹或選項的具體字數限制，請貼在這裡，或於 AI 對話一併提供；不可假設 AI 已讀取另一個機器人的資料。"></textarea></label><label>教師補充要求<textarea id="pExtra" rows="3" placeholder="例如施測時間、各課權重、特定句型、需要注音的字。"></textarea></label><button type="button" class="button primary full" id="paperGenerate">產生整張考卷提示詞 →</button><button type="button" class="text-link" id="paperReset">恢復三年級範例設定</button><p class="micro">選項變更後會更新右側提示詞。直接編輯過提示詞時，請先複製保留，再調整設定。</p></section>`;
 host.insertBefore(panel,old);old.hidden=true;
 let currentMode='paper';const v=id=>panel.querySelector('#'+id).value.trim(),n=id=>Number(v(id)),on=id=>panel.querySelector('#'+id).checked;
 function config(){const c={};panel.querySelectorAll('input,select,textarea').forEach(e=>c[e.id]=e.type==='checkbox'?e.checked:e.value);return c;}
@@ -262,7 +262,6 @@ function build(c){const val=id=>String(c[id]??'').trim(),num=id=>Number(c[id]),y
  const scores={Chars:num('pCharScore'),Choice:num('pChoiceScore'),Sentence:(num('pSentence')+num('pImitate'))*num('pSentenceEach'),Punctuation:num('pPunctuationScore'),Reading:num('pReadingCount')*num('pReadingEach')+num('pWritingCount')*num('pWritingEach')};const total=selected.reduce((a,k)=>a+scores[k],0);
  for(const k of selected)if(scores[k]<=0)errors.push('已勾選的大題須有大於 0 的分數。');
  if(yes('pUseChars')&&num('pCharCount')<1||yes('pUseChoice')&&num('pChoiceCount')<1||yes('pUsePunctuation')&&num('pPunctuationCount')<1||yes('pUseReading')&&num('pReadingCount')<1)errors.push('已勾選的大題至少須有 1 題或 1 格。');
- if(yes('pUseReading')&&num('pReadingCount')<[yes('pReadTitle'),yes('pReadFeatures')].filter(Boolean).length)errors.push('閱讀題數不足以分別評量已勾選的標題與說明文特點。');
  if(total!==100)errors.push('目前總分為 '+total+' 分；定期評量卷須合計 100 分，請調整大題配分。');
  const labels=['一','二','三','四','五','六'];let i=0,blueprint=[];
  const add=(s)=>blueprint.push('第'+labels[i++]+'大題｜'+s);
@@ -270,9 +269,33 @@ function build(c){const val=id=>String(c[id]??'').trim(),num=id=>Number(c[id]),y
  if(yes('pUseChoice'))add('選擇題：共 '+num('pChoiceCount')+' 題，共 '+scores.Choice+' 分。字形 '+num('pShape')+' 題、字音 '+num('pSound')+' 題、文意 '+num('pMeaning')+' 題、修辭 '+num('pRhetoric')+' 題。文意測驗：'+val('pMeaningRule')+'；提供作答所需的完整短文、句子或課文必要節錄，不用人名、次序等瑣碎記憶命題。每題四個選項編號統一使用「'+val('pOptionStyle')+'」。');
  if(yes('pUseSentence'))add('造句：造句 '+num('pSentence')+' 題、照樣造句 '+num('pImitate')+' 題，每題 '+num('pSentenceEach')+' 分，共 '+scores.Sentence+' 分。指定考點：'+(val('pSentenceFocus')||'依考試重點附件的已教詞語與句型')+'。照樣造句提供完整例句，標明要保留的語法結構；非選題接受合理的多元表達。');
  if(yes('pUsePunctuation'))add('標點符號：共 '+num('pPunctuationCount')+' 個作答格，共 '+scores.Punctuation+' 分。考點：'+(val('pPunctuationFocus')||'依附件與實際已教標點')+'。使用連貫語境；成對標點如何計格及計分須先說明。');
- if(yes('pUseReading'))add('說明文閱讀與寫作：自編一篇「'+val('pTopic')+'」說明文，約 '+num('pWords')+' 字（正文，不含題目與選項）；'+num('pReadingCount')+' 題閱讀測驗，每題 '+num('pReadingEach')+' 分；另加 '+num('pWritingCount')+' 題寫作任務，每題 '+num('pWritingEach')+' 分，共 '+scores.Reading+' 分。參考「'+(val('pReference')||'教師提供的說明文')+'」已教的說明方式，不照搬原文。'+(yes('pReadTitle')?'閱讀題包含一題選出適切標題；學生卷先以「閱讀短文」呈現正文，不揭示作者預定標題。':'')+(yes('pReadFeatures')?'另有一題辨認說明文特點／說明方法，須引用文中證據。':'')+(yes('pReadEvidence')?'其餘題目評量理解、推論與整合，答案由本文提供充分證據。':'')+'寫作任務形式：'+val('pWritingType')+'，依年級設定明確字數、條件與評分規準，不能只憑個人感受作答。'+(yes('pReadOriginal')?'文章事實須查核，不編造來源與數據；未查證處列為待核，不宣稱已查核。':''));
- const rules=[];
- if(yes('pContext'))rules.push('情境自然且接近日常，語句適齡；每題以一個主要評量目標為核心，避免多餘資訊與未教專業術語。');
+ if(yes('pUseReading')){
+   const genre=val('pGenre')||'說明文';
+   const reference=val('pReference');
+   const writing=val('pWritingType');
+   const writingGuidance={
+     '寫一封信給文中某個角色':'指定收信角色、寫信目的與基本格式，要求運用至少一項文本訊息。',
+     '針對文章某個觀點提出贊成或反對的想法':'指出要回應的觀點，要求表明立場，並以文本線索或具體例子說明理由。',
+     '延伸寫作：與主題相關的自身經驗':'引導學生寫出一段真實經驗，包含具體事件，並說明它與文章主題的連結。',
+     '其他（由 AI 依文體與主題補充）':'依文體與主題自訂一種適齡的任務，例如寫留言回應角色的決定、改寫故事的結尾，或設計一則可實際使用的提醒。只選一種，並明訂作答條件。'
+   };
+   const writingTask=num('pWritingCount')>0
+     ?'另加 '+num('pWritingCount')+' 題寫作任務，每題 '+num('pWritingEach')+' 分。寫作任務形式：'+writing+'。'+(writingGuidance[writing]||'依本文訊息及任務目的設計。')+'依年級訂定字數、作答條件與評分規準。'
+     :'';
+   add('閱讀與寫作任務：自編一篇主題為「'+val('pTopic')+'」的'+genre+'，正文約 '+num('pWords')+' 字，不含題目與選項。安排 '+num('pReadingCount')+' 題閱讀理解，每題 '+num('pReadingEach')+' 分。'+writingTask+'本大題共 '+scores.Reading+' 分。'+(reference?'參考「'+reference+'」中已教的閱讀或寫作重點，不照搬原文。':'')+'依選定文體與已教內容設計題目。若評量選標題，學生卷不先揭示預定標題。涉及事實、來源或數據時應查核，未能查證之處須標記待核。');
+ }
+ const rules=[
+   '加入完整語境的題幹。提供足以作答的文章線索、必要節錄或生活情境，語句須適齡，每題以一項主要能力為核心。從受評學生的角度檢查是否過度依賴背誦，並對準該年段已教的學習重點。',
+   '讓語用能力應用於生活情境。以學生可理解的真實任務轉化所學，讓學生運用語文解決問題。情境轉化題的選項應改述文本訊息或轉成新情境，不直接複製原句；正解仍須有文本證據。過度開放、缺乏穩定評分依據的題目，適合先在課堂討論，再設計成可檢核的紙筆任務。'
+ ];
+ if(yes('pUseReading')){
+   rules.push(
+     '閱讀測驗盡量涵蓋直接提取、推理整合、詮釋整合、比較評估四個層次。可評量中心句（重點句）、段落或全文大意、主旨、適切標題和寫作手法。依實際思考歷程判定層次，不能只看題幹形式；題數不足時，依文本與學習目標取捨並註明。',
+     '閱讀內容題幹句式參考：① 文中主角做了……，可以用哪個四字語詞表示？② 改變主角想法的主要原因是誰說的哪句話？③ 在……時，主角可能是什麼心情？④ 主角的心情依序有什麼轉變？⑤ 文中三個角色有什麼共同特質？⑥ 依據……，這句話想傳達什麼用意？⑦ 作者透過主角的行為，想告訴我們什麼道理？⑧ 文中哪一句話最能說明故事的重點？',
+     '寫法可從四個尺度評量：篇章架構及其關係（總分、並列、因果、對比）、段落關係（順敘、因果、映襯）、句子關係（句型或修辭）、敘寫特色（標題、修辭、圖表輔助）。依所選文體評量適合的寫法，說明文可評量其特點、說明方法及效果。先讓學生辨認寫法，再透過提示安排限制式或情境式寫作，讓學生實際運用。',
+     '寫法題幹句式參考：① 本文和已學過的……在寫法上有何共同之處？② 本文採用……結構，本單元哪一課也採用相同結構？③ 作者為什麼在文末加入「後記」？④ 文章中的文字框有什麼功能？⑤ 作者依據什麼原則安排……段落的順序？比對題應提供必要的文本或摘要，並依文本實際呈現改寫句式。'
+   );
+ }
  if(yes('pConfusion'))rules.push('字音、同音／音近／形近字與多音字依已教內容設計；必要時運用部首、部件推論。每個誘答均對應具體誤讀，不能以荒謬選項湊數。');
  if(yes('pLogic'))rules.push('詞彙須有上下文線索，詞義與句型關係依已教內容；不把「九大句型」當作學生均已學過的範圍。');
  if(yes('pLevels'))rules.push('閱讀題依文本合理搭配提取、推論、統整及比較評估，不為湊層次強加文本不支持的題目；教學分層名稱不宣稱為 PISA 官方分類。');
@@ -291,7 +314,7 @@ function update(){const r=build(config());if([...panel.querySelectorAll('input[t
 panel.addEventListener('input',update);panel.addEventListener('change',update);document.querySelector('#paperGenerate').addEventListener('click',()=>{const r=update();if(!r.errors.length&&innerWidth<760)document.querySelector('#promptOutput').scrollIntoView({block:'center',behavior:'smooth'});});
 mode.querySelectorAll('[data-mode]').forEach(button=>button.addEventListener('click',()=>{currentMode=button.dataset.mode;panel.hidden=currentMode!=='paper';old.hidden=currentMode==='paper';mode.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));if(currentMode==='paper')update();else{document.querySelector('#promptOutput').value='';document.querySelector('#promptBadge').textContent='依向度設定後產生';document.querySelector('#copyPrompt').disabled=true;document.querySelector('#downloadPrompt').disabled=true;document.querySelector('#copyStatus').textContent='';}}));
 document.querySelector('#paperReset').addEventListener('click',()=>{panel.querySelectorAll('input,textarea,select').forEach(e=>{if(e.type==='checkbox')e.checked=e.defaultChecked;else if(e.tagName==='SELECT')e.value=[...e.options].find(o=>o.defaultSelected)?.value||e.options[0].value;else e.value=e.defaultValue;});update();});
-try{const saved=JSON.parse(localStorage.getItem('sunny-whole-paper-v1'));if(saved)panel.querySelectorAll('input,select,textarea').forEach(e=>{if(saved[e.id]!==undefined){if(e.type==='checkbox')e.checked=!!saved[e.id];else e.value=saved[e.id];}});}catch(e){}update();
+try{const saved=JSON.parse(localStorage.getItem('sunny-whole-paper-v1'));if(saved)panel.querySelectorAll('input,select,textarea').forEach(e=>{if(saved[e.id]!==undefined){if(e.type==='checkbox')e.checked=!!saved[e.id];else if(e.tagName!=='SELECT'||[...e.options].some(o=>o.value===saved[e.id]))e.value=saved[e.id];}});}catch(e){}update();
 document.addEventListener('click',e=>{if(e.target.closest('[data-use-original],[data-use]')){currentMode='dimension';panel.hidden=true;old.hidden=false;mode.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode==='dimension')));}});
 globalThis.sunnyWholePaper={build};
 })();
